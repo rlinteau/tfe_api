@@ -10,7 +10,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class TfeOrganization:
     headers = CaseInsensitiveDict()
     headers['Content-Type'] = 'application/vnd.api+json'
-
+    
     def __init__(self, host):
         self.host = host
 
@@ -21,9 +21,9 @@ class TfeOrganization:
         try:
             response = requests.get(url, headers=self.headers, verify=False)
             response.raise_for_status()
-        except Exception:
-            pass
-            
+        except requests.exceptions.HTTPError as err:
+            print(err)
+ 
         if response.status_code == 200:
             return True
         else:

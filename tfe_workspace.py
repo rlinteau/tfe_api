@@ -10,7 +10,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class TfeWorkspace:
     headers = CaseInsensitiveDict()
     headers['Content-Type'] = 'application/vnd.api+json'
-
+    
     def __init__(self, host):
         self.host = host
 
@@ -21,10 +21,54 @@ class TfeWorkspace:
         try:
             response = requests.get(url, headers=self.headers, verify=False)
             response.raise_for_status()
-        except Exception:
-            pass
+        except requests.exceptions.HTTPError as err:
+            print(err)
             
         if response.status_code == 200:
+            return True
+        else:
+            return False
+
+    def get_workspace_id(self, auth_token, org_name, workspace_name):
+        url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces/{workspace_name}"
+        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+
+        try:
+            response = requests.get(url, headers=self.headers, verify=False)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            print(err)
+
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+
+    def create_workspace_vcs(self, auth_token, org_name, workspace_name, tf_version, working_dir, vcs_repo_name, vcs_repo_oauth):
+        url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces"
+        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+        payload = {
+                    "data": {
+                      "attributes": {
+                        "name": workspace_name,
+                        "terraform_version": tf_version,
+                        "working-directory": working_dir,
+                        "vcs-repo": {
+                          "identifier": vcs_repo_name,
+                          "oauth-token-id": vcs_repo_oauth
+                        },
+                      },
+                      "type": "workspaces"
+                    }
+                  }
+
+        try:
+            response = requests.post(url, headers=self.headers, json=payload, verify=False)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            print(err)
+
+        if response.status_code == 201:
             return True
         else:
             return False
