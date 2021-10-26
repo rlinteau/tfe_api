@@ -14,27 +14,27 @@ except KeyError:
     sys.exit(1)
 
 ## Test if Org exist
-xxx = Tfe(host)
-test = xxx.check_organization_exist(auth_token, 'RLInfo')
+xxx = Tfe(host, auth_token)
+test = xxx.check_organization_exist('RLInfo')
 print(test)
 
 ## Test if Workspace exist
-xxx = Tfe(host)
-test = xxx.check_workspace_exist(auth_token, 'RLInfo', 'test')
+xxx = Tfe(host, auth_token)
+test = xxx.check_workspace_exist('RLInfo', 'test')
 print(test)
 
 ## Test if Workspace exist
-xxx = Tfe(host)
-workspace_id = xxx.get_workspace_id(auth_token, 'RLInfo', 'abc123')
+xxx = Tfe(host, auth_token)
+workspace_id = xxx.get_workspace_id('RLInfo', 'abc123')
 print(workspace_id)
 
 ## Test if Workspace exist
-#xxx = Tfe(host)
-#test = xxx.create_workspace_vcs(auth_token, 'RLInfo', 'abc123', '1.0.2', '/terraform', 'rlinteau/tfe_api', github_oauth_token)
+#xxx = Tfe(host, auth_token)
+#test = xxx.create_workspace_vcs('RLInfo', 'abc123', '1.0.2', '/terraform', 'rlinteau/tfe_api', github_oauth_token)
 #print(test)
 
 # TFE var create
-xxx = Tfe(host)
-#test = xxx.create_variable_string(auth_token, 'ws-8f91WqLa1xV6ZYwT', 'var1', 'key1', False)
-test = xxx.create_variable_string(auth_token, workspace_id, 'var1', 'key1', False)
+xxx = Tfe(host, auth_token)
+#test = xxx.create_variable_string('ws-8f91WqLa1xV6ZYwT', 'var1', 'key1', False)
+test = xxx.create_variable_string(workspace_id, 'var1', 'key1', False)
 print(test)

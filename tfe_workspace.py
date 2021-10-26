@@ -13,10 +13,11 @@ class TfeWorkspace:
     
     def __init__(self, host):
         self.host = host
+        self.auth_token = auth_token
 
-    def check_workspace_exist(self, auth_token, org_name, workspace_name):
+    def check_workspace_exist(self, org_name, workspace_name):
         url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces/{workspace_name}"
-        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
 
         try:
             response = requests.get(url, headers=self.headers, verify=False)
@@ -28,9 +29,9 @@ class TfeWorkspace:
             
         return False
 
-    def get_workspace_id(self, auth_token, org_name, workspace_name):
+    def get_workspace_id(self, org_name, workspace_name):
         url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces/{workspace_name}"
-        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
 
         try:
             response = requests.get(url, headers=self.headers, verify=False)
@@ -42,9 +43,9 @@ class TfeWorkspace:
 
         return False
 
-    def create_workspace_vcs(self, auth_token, org_name, workspace_name, tf_version, working_dir, vcs_repo_name, vcs_repo_oauth):
+    def create_workspace_vcs(self, org_name, workspace_name, tf_version, working_dir, vcs_repo_name, vcs_repo_oauth):
         url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces"
-        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
         payload = {
                     "data": {
                       "attributes": {

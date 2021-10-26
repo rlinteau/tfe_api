@@ -11,12 +11,13 @@ class TfeOrganization:
     headers = CaseInsensitiveDict()
     headers['Content-Type'] = 'application/vnd.api+json'
     
-    def __init__(self, host):
+    def __init__(self, host, auth_token):
         self.host = host
+        self.auth_token = auth_token
 
-    def check_organization_exist(self, auth_token, org_name):
+    def check_organization_exist(self, org_name):
         url = f"https://{self.host}/api/v2/organizations/{org_name}"
-        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
 
         try:
             response = requests.get(url, headers=self.headers, verify=False)

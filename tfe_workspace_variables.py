@@ -13,10 +13,11 @@ class TfeVariables:
     
     def __init__(self, host):
         self.host = host
+        self.auth_token = auth_token
 
-    def create_variable_string(self, auth_token, workspace_id, var_key, var_value, var_sensitive):
-        url = f"https://{self.host}/api/v2/vars"
-        self.headers['Authorization'] = 'Bearer {}'.format(auth_token)
+    def create_variable_string(self, workspace_id, var_key, var_value, var_sensitive):
+        url = f"https://{self.host}/api/v2/workspaces/{workspace_id}/vars"
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
         payload = {
                     "data": {
                       "type":"vars",
@@ -26,14 +27,6 @@ class TfeVariables:
                         "category":"terraform",
                         "hcl":"false",
                         "sensitive":var_sensitive
-                       },
-                      "relationships": {
-                        "workspace": {
-                          "data": {
-                            "id":workspace_id,
-                            "type":"workspaces"
-                          }
-                        }
                       }
                     }
                   }
