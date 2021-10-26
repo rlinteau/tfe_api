@@ -21,13 +21,12 @@ class TfeWorkspace:
         try:
             response = requests.get(url, headers=self.headers, verify=False)
             response.raise_for_status()
+            if response.status_code == 200:
+                return True
         except requests.exceptions.HTTPError as err:
             print(err)
             
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return False
 
     def get_workspace_id(self, auth_token, org_name, workspace_name):
         url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces/{workspace_name}"
@@ -36,13 +35,12 @@ class TfeWorkspace:
         try:
             response = requests.get(url, headers=self.headers, verify=False)
             response.raise_for_status()
+            if response.status_code == 200:
+                return response.json()["data"]["id"]
         except requests.exceptions.HTTPError as err:
             print(err)
 
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return False
 
     def create_workspace_vcs(self, auth_token, org_name, workspace_name, tf_version, working_dir, vcs_repo_name, vcs_repo_oauth):
         url = f"https://{self.host}/api/v2/organizations/{org_name}/workspaces"
@@ -65,10 +63,9 @@ class TfeWorkspace:
         try:
             response = requests.post(url, headers=self.headers, json=payload, verify=False)
             response.raise_for_status()
+            if response.status_code == 201:
+                return True
         except requests.exceptions.HTTPError as err:
             print(err)
 
-        if response.status_code == 201:
-            return True
-        else:
-            return False
+        return False

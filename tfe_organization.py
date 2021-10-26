@@ -21,10 +21,9 @@ class TfeOrganization:
         try:
             response = requests.get(url, headers=self.headers, verify=False)
             response.raise_for_status()
+            if response.status_code == 200:
+                return True
         except requests.exceptions.HTTPError as err:
             print(err)
  
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return False

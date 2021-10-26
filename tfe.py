@@ -4,14 +4,13 @@ import json
 import urllib3
 import time
 from datetime import date
-#import tfe_organization
-from tfe_organization import TfeOrganization
-#import tfe_workspace
-from tfe_workspace import TfeWorkspace
+import tfe_organization
+import tfe_workspace
+import tfe_variables
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-class Tfe(TfeOrganization, TfeWorkspace):
+class Tfe(tfe_organization.TfeOrganization, tfe_workspace.TfeWorkspace, tfe_variables.TfeVariables):
     headers = CaseInsensitiveDict()
     headers['Content-Type'] = 'application/vnd.api+json'
 
