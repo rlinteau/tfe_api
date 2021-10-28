@@ -34,7 +34,17 @@ print(workspace_id)
 #print(test)
 
 # TFE var create
-xxx = Tfe(host, auth_token)
+#xxx = Tfe(host, auth_token)
 #test = xxx.create_variable_string('ws-8f91WqLa1xV6ZYwT', 'var1', 'key1', False)
-test = xxx.create_variable_string(workspace_id, 'var1', 'key1', False)
+#test = xxx.create_variable_string(workspace_id, 'var1', 'key1', False)
 print(test)
+
+# TFE var found
+xxx = Tfe(host, auth_token)
+test = xxx.get_variable_id(workspace_id, 'var1')
+print(f"Variable found: {test}")
+
+# TFE var not found
+xxx = Tfe(host, auth_token)
+test = xxx.get_variable_id(workspace_id, 'notexist')
+print(f"Variable not found: {test}")

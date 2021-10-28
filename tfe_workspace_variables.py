@@ -40,3 +40,25 @@ class TfeVariables:
             print(err)
 
         return False
+
+    def get_variable_id(self, workspace_id, var_key):
+        url = f"https://{self.host}/api/v2/workspaces/{workspace_id}/vars"
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
+
+        try:
+            response = requests.get(url, headers=self.headers, verify=False)
+            response.raise_for_status()
+
+            if response.status_code == 200:
+                varlist = response.json()
+                for item in varlist['data']:
+                    if item['attributes']['key'] == var_key:
+                        return item['id']
+        except requests.exceptions.HTTPError as err:
+            print(err)
+
+        return False
+
+    #def update_variable_string(self, workspace_id, var_key, var_value, var_sensitive):
+    #    url = f"https://{self.host}/api/v2/workspaces/{workspace_id}/vars"
+    #    self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
