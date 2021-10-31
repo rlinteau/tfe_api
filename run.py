@@ -48,3 +48,13 @@ print(f"Variable found: {test}")
 xxx = Tfe(host, auth_token)
 test = xxx.get_variable_id(workspace_id, 'notexist')
 print(f"Variable not found: {test}")
+
+# Update TFE
+xxx = Tfe(host, auth_token)
+test = xxx.update_variable_string('ws-8f91WqLa1xV6ZYwT', 'var-oaPMssmYQ9B8CKDr', 'var1',  'truite1', False)
+print(f"Variable update: {test}")
+
+# Update TFE
+xxx = Tfe(host, auth_token)
+test = xxx.update_variable_string('ws-8f91WqLa1xV6ZYwT', 'var-oaPMssmYQ9B8CKDrXXX', 'var1',  'truite1', False)
+print(f"Variable update error: {test}")

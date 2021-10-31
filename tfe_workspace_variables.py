@@ -59,6 +59,30 @@ class TfeVariables:
 
         return False
 
-    #def update_variable_string(self, workspace_id, var_key, var_value, var_sensitive):
-    #    url = f"https://{self.host}/api/v2/workspaces/{workspace_id}/vars"
-    #    self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
+    def update_variable_string(self, workspace_id, var_id, var_key, var_value, var_sensitive):
+        url = f"https://{self.host}/api/v2/workspaces/{workspace_id}/vars/{var_id}"
+        self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
+        payload = {
+                    "data": {
+                      "id":var_id,
+                      "attributes": {
+                        "key":var_key,
+                        "value":var_value,
+                        "category":"terraform",
+                        "hcl": "false",
+                        "sensitive": var_sensitive
+                      },
+                      "type":"vars"
+                    }
+                  }
+
+        try:
+            response = requests.patch(url, headers=self.headers, json=payload, verify=False)
+            response.raise_for_status()
+            if response.status_code == 200:
+                return True
+        except requests.exceptions.HTTPError as err:
+            print(err)
+
+        return False
+
