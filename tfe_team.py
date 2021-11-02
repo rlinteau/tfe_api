@@ -24,9 +24,9 @@ class TfeTeam:
             response.raise_for_status()
             if response.status_code == 200:
                 content = response.json()
-                for i in content['data']:
-                    if i['attributes'].get('name') == team_name:
-                        return i['id']
+                for item in content['data']:
+                    if item['attributes'].get('name') == team_name:
+                        return item['id']
         except requests.exceptions.HTTPError as err:
             print(err)
 
