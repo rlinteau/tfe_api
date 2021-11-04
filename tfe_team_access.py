@@ -16,7 +16,7 @@ class TfeTeamAccess:
         self.auth_token = auth_token
 
     def add_access_to_workspace(self, workspace_id, team_id, access_perms):
-        url = f"https://{self.host}/api/v2/team-workspace"
+        url = f"https://{self.host}/api/v2/team-workspaces"
         self.headers['Authorization'] = 'Bearer {}'.format(self.auth_token)
         payload = {
                     "data": {

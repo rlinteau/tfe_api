@@ -63,3 +63,7 @@ print(f"Variable update error: {test}")
 xxx = Tfe(host, auth_token)
 test = xxx.get_team_id('RLInfo', 'owners')
 print(f"Team ID: {test}")
+
+##xxx = Tfe(host, auth_token)
+##test = xxx.add_access_to_workspace('ws-8f91WqLa1xV6ZYwT', 'team-M2urgFXgMRjwWs8U', 'write')
+##print(test)
